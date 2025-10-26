@@ -1,0 +1,58 @@
+#include <stdio.h>
+
+int binarySearch(int arr[], int n, int target, int *comparisons) {
+    int low = 0, high = n - 1, mid;
+    *comparisons = 0;
+
+    while (low <= high) {
+        (*comparisons)++;
+        mid = (low + high) / 2;
+
+        if (arr[mid] == target)
+            return mid;  // Element found
+        else if (arr[mid] < target)
+            low = mid + 1;  // Search right half
+        else
+            high = mid - 1;  // Search left half
+    }
+    return -1;  // Element not found
+}
+
+int main() {
+    int n, target, i, comparisons;
+
+    // Input array size
+    printf("Enter size of sorted array: ");
+    scanf("%d", &n);
+
+    int arr[n];  // Variable length array
+
+    // Input array elements
+    printf("Enter %d elements in sorted order:\n", n);
+    for (i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    // Input target
+    printf("Enter element to search: ");
+    scanf("%d", &target);
+
+    // Perform binary search
+    int index = binarySearch(arr, n, target, &comparisons);
+
+    // Output result
+    if (index != -1)
+        printf("\nElement %d found at index %d\n", target, index);
+    else
+        printf("\nElement %d not found\n", target);
+
+    // Calculate approximate space used (main + function)
+    int space_main = sizeof(n) + sizeof(target) + sizeof(i) + sizeof(comparisons) + sizeof(arr);
+    int space_function = sizeof(int) * 3; // low, high, mid
+    int total_space = space_main + space_function;
+
+    // Output actual comparisons and space
+    printf("\nActual comparisons made (Time Complexity): %d\n", comparisons);
+    printf("Approximate space used by variables (Space Complexity): %d bytes\n", total_space);
+
+    return 0;
+}
